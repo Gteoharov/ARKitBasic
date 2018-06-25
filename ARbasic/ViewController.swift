@@ -66,7 +66,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         node.position = SCNVector3(0, -20, -20)
-        node.scale = SCNVector3(0.12, 0.12, 0.12)
+        node.scale = SCNVector3(0.01, 0.01, 0.01)
         sceneView.scene.rootNode.addChildNode(node)
     }
     
@@ -78,7 +78,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func createMonster(position: SCNVector3) {
-        let node = SCNNode(named: "art.scnassets/Opening A Lid.dae")
+        let idleScene = SCNScene(named: "art.scnassets/Opening A Lid.dae")!
+        let node = SCNNode()
+        
+        for child in idleScene.rootNode.childNodes {
+            node.addChildNode(child)
+        }
         node.scale = SCNVector3(0.01, 0.01, 0.01)
         node.position = position
         sceneView.scene.rootNode.addChildNode(node)
