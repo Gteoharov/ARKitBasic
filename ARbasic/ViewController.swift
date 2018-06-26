@@ -18,7 +18,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
     
         singleTapGestureRecognizer()
-        doubleTapGestureRecognizer()
+        swipeGestureRecognizer()
+        
+        
         
         // Set the view's delegate
         sceneView.delegate = self
@@ -31,7 +33,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
-        loadMonster()
+        loadMMAFighter()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,17 +53,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
+    @objc private func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizerDirection.right {
+            loadMonster()
+        }
+        if gesture.direction == UISwipeGestureRecognizerDirection.left {
+            loadSoldier()
+        }
+    }
+    
+    private func swipeGestureRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeRight.direction = .right
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeLeft.direction = .left
+        self.sceneView.addGestureRecognizer(swipeLeft)
+        self.sceneView.addGestureRecognizer(swipeRight)
+    }
+    
     private func singleTapGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    private func doubleTapGestureRecognizer() {
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2
-        self.sceneView.addGestureRecognizer(doubleTapGestureRecognizer)
-    }
     
     @objc func doubleTapped(reconizer: UITapGestureRecognizer) {
         let tapped = reconizer.view as! SCNView
@@ -87,29 +102,52 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        guard let tocuh = touches.first else { return }
-        let result = sceneView.hitTest(tocuh.location(in: sceneView), types: [ARHitTestResult.ResultType.featurePoint])
-        guard let hitResult = result.last else { return }
-        let hitTransform =  SCNMatrix4(hitResult.worldTransform)
-        let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        createSouljer(position: hitVector)
-
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//
+//        guard let tocuh = touches.first else { return }
+//        let result = sceneView.hitTest(tocuh.location(in: sceneView), types: [ARHitTestResult.ResultType.featurePoint])
+//        guard let hitResult = result.last else { return }
+//        let hitTransform =  SCNMatrix4(hitResult.worldTransform)
+//        let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+//        createSouljer(position: hitVector)
+//
+//    }
     
-    func loadMonster() {
-        let idleScene = SCNScene(named: "art.scnassets/Mma Kick.dae")!
+    func loadSoldier() {
+        let idleScene = SCNScene(named: "art.scnassets/Inverted Double Kick To Kip Up.dae")!
         let node = SCNNode()
         for child in idleScene.rootNode.childNodes {
             node.addChildNode(child)
         }
         
         node.position = SCNVector3(0, -30, -70)
-        node.scale = SCNVector3(0.18, 0.18, 0.18)
+        node.scale = SCNVector3(0.2, 0.2, 0.2)
         sceneView.scene.rootNode.addChildNode(node)
     }
     
+    func loadMonster() {
+        let idleScene = SCNScene(named: "art.scnassets/Opening A Lid.dae")!
+        let node = SCNNode()
+        for child in idleScene.rootNode.childNodes {
+            node.addChildNode(child)
+        }
+        
+        node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.30, 0.30, 0.30)
+        sceneView.scene.rootNode.addChildNode(node)
+    }
+    
+    func loadMMAFighter() {
+        let idleScene = SCNScene(named: "art.scnassets/Chapa Giratoria 2.dae")!
+        let node = SCNNode()
+        for child in idleScene.rootNode.childNodes {
+            node.addChildNode(child)
+        }
+        
+        node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.25, 0.25, 0.25)
+        sceneView.scene.rootNode.addChildNode(node)
+    }
     
     func createSouljer(position: SCNVector3) {
         let idleScene = SCNScene(named: "art.scnassets/Inverted Double Kick To Kip Up.dae")!
