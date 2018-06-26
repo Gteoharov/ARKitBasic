@@ -16,6 +16,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        singleTapGestureRecognizer()
+        doubleTapGestureRecognizer()
         
         // Set the view's delegate
         sceneView.delegate = self
@@ -48,33 +51,76 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
+    private func singleTapGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func doubleTapGestureRecognizer() {
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        self.sceneView.addGestureRecognizer(doubleTapGestureRecognizer)
+    }
+    
+    @objc func doubleTapped(reconizer: UITapGestureRecognizer) {
+        let tapped = reconizer.view as! SCNView
+        let touchLocation = reconizer.location(in: tapped)
+        let hitTest = tapped.hitTest(touchLocation, options: nil)
+        if !hitTest.isEmpty {
+            guard let touch = hitTest.first else { return }
+            let result = sceneView.hitTest(touch.accessibilityActivationPoint, types: [ARHitTestResult.ResultType.featurePoint])
+            guard let hitResult = result.last else { return }
+            let hitTransform =  SCNMatrix4(hitResult.worldTransform)
+            let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+            createSouljer(position: hitVector)
+        }
+    }
+    
+    @objc func tapped(recognizer :UITapGestureRecognizer) {
+        let tappedView = recognizer.view as! SCNView
+        let touchLocation = recognizer.location(in: tappedView)
+        let hitTest = tappedView.hitTest(touchLocation, options: nil)
+        if !hitTest.isEmpty {
+            let result = hitTest.first!
+            result.node.removeFromParentNode()
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
         guard let tocuh = touches.first else { return }
         let result = sceneView.hitTest(tocuh.location(in: sceneView), types: [ARHitTestResult.ResultType.featurePoint])
         guard let hitResult = result.last else { return }
         let hitTransform =  SCNMatrix4(hitResult.worldTransform)
         let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        createMonster(position: hitVector)
-        
+        createSouljer(position: hitVector)
+
     }
     
     func loadMonster() {
-        let idleScene = SCNScene(named: "art.scnassets/Opening A Lid.dae")!
+        let idleScene = SCNScene(named: "art.scnassets/Mma Kick.dae")!
         let node = SCNNode()
         for child in idleScene.rootNode.childNodes {
             node.addChildNode(child)
         }
         
-        node.position = SCNVector3(0, -20, -20)
-        node.scale = SCNVector3(0.01, 0.01, 0.01)
+        node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.18, 0.18, 0.18)
         sceneView.scene.rootNode.addChildNode(node)
     }
     
-    func createBall(position : SCNVector3) {
-        let myBallShape = SCNSphere(radius: 0.01)
-        let ballNode = SCNNode(geometry: myBallShape)
-        ballNode.position = position
-        sceneView.scene.rootNode.addChildNode(ballNode)
+    
+    func createSouljer(position: SCNVector3) {
+        let idleScene = SCNScene(named: "art.scnassets/Inverted Double Kick To Kip Up.dae")!
+        let node = SCNNode()
+        for child in idleScene.rootNode.childNodes {
+            node.addChildNode(child)
+        }
+        
+        node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.20, 0.20, 0.20)
+        sceneView.scene.rootNode.addChildNode(node)
     }
     
     func createMonster(position: SCNVector3) {
@@ -136,4 +182,26 @@ extension SCNNode {
         }
     }
     
+}
+
+public extension Float {
+    
+    // Returns a random floating point number between 0.0 and 1.0, inclusive.
+    
+    public static var random:Float {
+        get {
+            return Float(arc4random()) / 0xFFFFFFFF
+        }
+    }
+    /*
+     Create a random num Float
+     
+     - parameter min: Float
+     - parameter max: Float
+     
+     - returns: Float
+     */
+    public static func random(min: Float, max: Float) -> Float {
+        return Float.random * (max - min) + min
+    }
 }
