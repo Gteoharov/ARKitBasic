@@ -60,6 +60,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if gesture.direction == UISwipeGestureRecognizerDirection.left {
             loadSoldier()
         }
+        if gesture.direction == UISwipeGestureRecognizerDirection.down {
+            loadMMAKick()
+        }
     }
     
     private func swipeGestureRecognizer() {
@@ -67,8 +70,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         swipeRight.direction = .right
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeLeft.direction = .left
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         self.sceneView.addGestureRecognizer(swipeLeft)
         self.sceneView.addGestureRecognizer(swipeRight)
+        self.sceneView.addGestureRecognizer(swipeDown)
     }
     
     private func singleTapGestureRecognizer() {
@@ -145,6 +150,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.25, 0.25, 0.25)
+        sceneView.scene.rootNode.addChildNode(node)
+    }
+    
+    func loadMMAKick() {
+        let idleScene = SCNScene(named: "art.scnassets/Mma Kick.dae")!
+        let node = SCNNode()
+        for child in idleScene.rootNode.childNodes {
+            node.addChildNode(child)
+        }
+        
+        node.position = SCNVector3(-20, -30, -70)
         node.scale = SCNVector3(0.25, 0.25, 0.25)
         sceneView.scene.rootNode.addChildNode(node)
     }
