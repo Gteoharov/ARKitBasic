@@ -9,11 +9,12 @@
 import UIKit
 import SceneKit
 import ARKit
+import AVFoundation
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    
+    var player: AVAudioPlayer?
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -33,7 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
-        loadMMAFighter()
+        loadGirlDance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +62,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             loadSoldier()
         }
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            loadMMAKick()
+            loadGirlDance()
+        }
+    }
+    
+    func playSound() {
+        guard let url = Bundle.main.url(forResource: "ARMusic", withExtension: ".mov") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            /* iOS 10 and earlier require the following line:
+             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
+            
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
@@ -104,6 +129,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if !hitTest.isEmpty {
             let result = hitTest.first!
             result.node.removeFromParentNode()
+        }
+        if player!.isPlaying {
+            player?.pause()
         }
     }
     
@@ -154,16 +182,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(node)
     }
     
-    func loadMMAKick() {
-        let idleScene = SCNScene(named: "art.scnassets/Mma Kick.dae")!
+    func loadGirlDance() {
+        let idleScene = SCNScene(named: "art.scnassets/Bellydancing.dae")!
         let node = SCNNode()
         for child in idleScene.rootNode.childNodes {
             node.addChildNode(child)
         }
         
-        node.position = SCNVector3(-20, -30, -70)
-        node.scale = SCNVector3(0.25, 0.25, 0.25)
+        node.position = SCNVector3(0, -30, -70)
+        node.scale = SCNVector3(0.30, 0.30, 0.30)
         sceneView.scene.rootNode.addChildNode(node)
+        playSound()
     }
     
     func createSouljer(position: SCNVector3) {
