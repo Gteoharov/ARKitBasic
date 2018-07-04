@@ -120,6 +120,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeLeft.direction = .left
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeDown.direction = .down
         self.sceneView.addGestureRecognizer(swipeLeft)
         self.sceneView.addGestureRecognizer(swipeRight)
         self.sceneView.addGestureRecognizer(swipeDown)
