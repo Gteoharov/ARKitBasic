@@ -34,7 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
-        loadGirlDance()
+        addBox()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +64,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
             loadGirlDance()
         }
+    }
+    
+    func addBox() {
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        
+        let boxNode = SCNNode()
+        boxNode.geometry = box
+        boxNode.position = SCNVector3(0, 0, -0.2)
+        
+        let scene = SCNScene()
+        scene.rootNode.addChildNode(boxNode)
+        sceneView.scene = scene
+        playMonsterSound()
     }
     
     func playSound() {
@@ -133,20 +146,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     
-    @objc func doubleTapped(reconizer: UITapGestureRecognizer) {
-        let tapped = reconizer.view as! SCNView
-        let touchLocation = reconizer.location(in: tapped)
-        let hitTest = tapped.hitTest(touchLocation, options: nil)
-        if !hitTest.isEmpty {
-            guard let touch = hitTest.first else { return }
-            let result = sceneView.hitTest(touch.accessibilityActivationPoint, types: [ARHitTestResult.ResultType.featurePoint])
-            guard let hitResult = result.last else { return }
-            let hitTransform =  SCNMatrix4(hitResult.worldTransform)
-            let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-            createSouljer(position: hitVector)
-        }
-    }
-    
+//    @objc func doubleTapped(reconizer: UITapGestureRecognizer) {
+//        let tapped = reconizer.view as! SCNView
+//        let touchLocation = reconizer.location(in: tapped)
+//        let hitTest = tapped.hitTest(touchLocation, options: nil)
+//        if !hitTest.isEmpty {
+//            guard let touch = hitTest.first else { return }
+//            let result = sceneView.hitTest(touch.accessibilityActivationPoint, types: [ARHitTestResult.ResultType.featurePoint])
+//            guard let hitResult = result.last else { return }
+//            let hitTransform =  SCNMatrix4(hitResult.worldTransform)
+//            let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+//            createSouljer(position: hitVector)
+//        }
+//    }
+//
     @objc func tapped(recognizer :UITapGestureRecognizer) {
         let tappedView = recognizer.view as! SCNView
         let touchLocation = recognizer.location(in: tappedView)
