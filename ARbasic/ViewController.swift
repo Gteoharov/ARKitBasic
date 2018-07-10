@@ -127,6 +127,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    func playSouljerSound() {
+        guard let url = Bundle.main.url(forResource: "ARSouljer", withExtension: ".mov") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            /* iOS 10 and earlier require the following line:
+             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
+            
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
     private func swipeGestureRecognizer() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeRight.direction = .right
@@ -194,6 +218,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.position = SCNVector3(0, -30, -70)
         node.scale = SCNVector3(0.2, 0.2, 0.2)
         sceneView.scene.rootNode.addChildNode(node)
+        playSouljerSound()
     }
     
     func loadMonster() {
