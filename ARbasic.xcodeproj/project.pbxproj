@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212E29E221EE07A800F73B91 /* ARMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 212E29E121EE07A800F73B91 /* ARMusic.mp3 */; };
+		212E29E421EE07DD00F73B91 /* ARMonster.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 212E29E321EE07DD00F73B91 /* ARMonster.mp3 */; };
 		2188584820E1060200876684 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2188584720E1060200876684 /* AppDelegate.swift */; };
 		2188584A20E1060200876684 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 2188584920E1060200876684 /* art.scnassets */; };
 		2188584C20E1060200876684 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2188584B20E1060200876684 /* ViewController.swift */; };
@@ -15,8 +17,6 @@
 		2188585420E1060200876684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2188585220E1060200876684 /* LaunchScreen.storyboard */; };
 		2188585F20E1060300876684 /* ARbasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2188585E20E1060300876684 /* ARbasicTests.swift */; };
 		2188586A20E1060300876684 /* ARbasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2188586920E1060300876684 /* ARbasicUITests.swift */; };
-		21ADC0BC20EBD8EB0035E02B /* ARMonster.mov in Resources */ = {isa = PBXBuildFile; fileRef = 21ADC0BB20EBD8EB0035E02B /* ARMonster.mov */; };
-		21BE8FCE20E5AE5A00A5889B /* ARMusic.mov in Resources */ = {isa = PBXBuildFile; fileRef = 21BE8FCD20E5AE5A00A5889B /* ARMusic.mov */; };
 		21CB262B20F49D1B00F15B12 /* ARSouljer.mov in Resources */ = {isa = PBXBuildFile; fileRef = 21CB262A20F49D1B00F15B12 /* ARSouljer.mov */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		212E29E121EE07A800F73B91 /* ARMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ARMusic.mp3; sourceTree = "<group>"; };
+		212E29E321EE07DD00F73B91 /* ARMonster.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ARMonster.mp3; sourceTree = "<group>"; };
 		2188584420E1060200876684 /* ARbasic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARbasic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2188584720E1060200876684 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2188584920E1060200876684 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -52,8 +54,6 @@
 		2188586520E1060300876684 /* ARbasicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARbasicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2188586920E1060300876684 /* ARbasicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARbasicUITests.swift; sourceTree = "<group>"; };
 		2188586B20E1060300876684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		21ADC0BB20EBD8EB0035E02B /* ARMonster.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = ARMonster.mov; path = ../../../../Downloads/ARMonster.mov; sourceTree = "<group>"; };
-		21BE8FCD20E5AE5A00A5889B /* ARMusic.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = ARMusic.mov; path = ../../../../Downloads/ARMusic.mov; sourceTree = "<group>"; };
 		21CB262A20F49D1B00F15B12 /* ARSouljer.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = ARSouljer.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,9 +105,9 @@
 		2188584620E1060200876684 /* ARbasic */ = {
 			isa = PBXGroup;
 			children = (
-				21BE8FCD20E5AE5A00A5889B /* ARMusic.mov */,
+				212E29E121EE07A800F73B91 /* ARMusic.mp3 */,
 				21CB262A20F49D1B00F15B12 /* ARSouljer.mov */,
-				21ADC0BB20EBD8EB0035E02B /* ARMonster.mov */,
+				212E29E321EE07DD00F73B91 /* ARMonster.mp3 */,
 				2188584720E1060200876684 /* AppDelegate.swift */,
 				2188584920E1060200876684 /* art.scnassets */,
 				2188584B20E1060200876684 /* ViewController.swift */,
@@ -242,11 +242,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				21CB262B20F49D1B00F15B12 /* ARSouljer.mov in Resources */,
-				21BE8FCE20E5AE5A00A5889B /* ARMusic.mov in Resources */,
 				2188584A20E1060200876684 /* art.scnassets in Resources */,
-				21ADC0BC20EBD8EB0035E02B /* ARMonster.mov in Resources */,
 				2188585420E1060200876684 /* LaunchScreen.storyboard in Resources */,
+				212E29E221EE07A800F73B91 /* ARMusic.mp3 in Resources */,
 				2188585120E1060200876684 /* Assets.xcassets in Resources */,
+				212E29E421EE07DD00F73B91 /* ARMonster.mp3 in Resources */,
 				2188584F20E1060200876684 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

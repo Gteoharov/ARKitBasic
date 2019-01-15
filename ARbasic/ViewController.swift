@@ -80,7 +80,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func playSound() {
-        guard let url = Bundle.main.url(forResource: "ARMusic", withExtension: ".mov") else { return }
+        guard let url = Bundle.main.url(forResource: "ARMusic", withExtension: ".mp3") else { return }
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -104,7 +104,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func playMonsterSound() {
-        guard let url = Bundle.main.url(forResource: "ARMonster", withExtension: ".mov") else { return }
+        guard let url = Bundle.main.url(forResource: "ARMonster", withExtension: ".mp3") else { return }
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
